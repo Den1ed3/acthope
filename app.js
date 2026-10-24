@@ -47,3 +47,34 @@ form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())
 document.querySelector('#edit-enquiry').addEventListener('click',()=>{form.hidden=false;document.querySelector('#review').hidden=true;form.elements.name.focus()});
 }
 
+// Applications use the same explicit email-draft flow as appointment enquiries.
+const applicationForm = document.querySelector('#collaboration-form');
+if (applicationForm) {
+  const review = document.querySelector('#application-review');
+  applicationForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!applicationForm.reportValidity()) return;
+    const data = new FormData(applicationForm);
+    const fields = [['Name', 'name'], ['Email', 'email'], ['Phone', 'phone'], ['Location', 'location'], ['Profession', 'profession'], ['Interest', 'interest'], ['Qualifications and experience', 'experience'], ['Availability', 'availability'], ['Why I would like to work with Alea', 'motivation']];
+    const rows = fields.map(([label, key]) => [label, String(data.get(key) || '').trim() || 'Not provided']);
+    const summary = document.querySelector('#application-summary');
+    summary.replaceChildren();
+    rows.forEach(([label, value]) => {
+      const term = document.createElement('dt');
+      const detail = document.createElement('dd');
+      term.textContent = label;
+      detail.textContent = value;
+      summary.append(term, detail);
+    });
+    const body = 'Hello Alea,\n\nI would like to express my interest in working or collaborating with you at ACT Hope Clinic.\n\n' + rows.map(([label, value]) => `${label}: ${value}`).join('\n\n') + '\n\nThank you for considering my expression of interest.';
+    document.querySelector('#application-email').href = 'mailto:toledoalea.slp@gmail.com?subject=' + encodeURIComponent('ACT Hope Clinic — work and collaboration application') + '&body=' + encodeURIComponent(body);
+    applicationForm.hidden = true;
+    review.hidden = false;
+    review.focus();
+  });
+  document.querySelector('#edit-application').addEventListener('click', () => {
+    review.hidden = true;
+    applicationForm.hidden = false;
+    applicationForm.elements.name.focus();
+  });
+}
