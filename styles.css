@@ -60,3 +60,8 @@ textarea:focus-visible{outline:3px solid #ad5f88;outline-offset:5px}
 #edit-application{display:block;margin:20px 0 25px}
 @media(min-width:761px) and (max-width:1100px){header{padding-inline:20px;gap:14px}nav{gap:14px}nav a{font-size:12px}.header-book{padding:10px 12px!important;gap:10px}}
 @media(max-width:760px){.purpose{padding-bottom:50px}.purpose-grid{grid-template-columns:1fr;gap:14px;margin:28px 0}.purpose-grid article{padding:26px}}
+
+/* Alea’s portrait in her biography. */
+.about-portrait{width:100%;max-width:500px;margin-inline:auto;overflow:hidden;border-radius:24px;background:var(--lavender)}
+.about-portrait img{display:block;width:100%;height:auto}
+@media(max-width:760px){.about-portrait{max-width:420px;border-radius:18px}}
